@@ -1,0 +1,111 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>
+      Thermal Printer Demo
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Receipt Preview</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="receipt-preview">
+      <div class="text-center">
+        <h2>STORE NAME</h2>
+        <p>123 Main Street</p>
+        <p>City, State 12345</p>
+        <p>Tel: (123) 456-7890</p>
+        <div class="divider"></div>
+        <p>Receipt #1001</p>
+        <p>{{ currentDate | date:'MM/dd/yyyy HH:mm' }}</p>
+        <div class="divider"></div>
+      </div>
+
+      <div class="item-row">
+        <span class="item-name">Item A</span>
+        <span class="item-price">${{ 10.99 | number:'1.2-2' }}</span>
+      </div>
+      <div class="item-row">
+        <span class="item-name">Item B</span>
+        <span class="item-price">${{ 5.99 | number:'1.2-2' }}</span>
+      </div>
+      <div class="item-row">
+        <span class="item-name">Item C</span>
+        <span class="item-price">${{ 7.50 | number:'1.2-2' }}</span>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="item-row total">
+        <span class="item-name">Total</span>
+        <span class="item-price">${{ 24.48 | number:'1.2-2' }}</span>
+      </div>
+
+      <div class="text-center qr-placeholder">
+        <p>[QR Code Placeholder]</p>
+        <p>www.example.com</p>
+      </div>
+
+      <div class="text-center">
+        <p>Thank you for your purchase!</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list lines="full">
+    <ion-item>
+      <ion-label>Select Printer Type</ion-label>
+      <ion-select [(ngModel)]="printerType" interface="popover">
+        <ion-select-option value="bluetooth">Bluetooth</ion-select-option>
+        <ion-select-option value="usb">USB</ion-select-option>
+        <ion-select-option value="network">Network</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="printerType === 'bluetooth'">
+      <ion-button expand="block" (click)="listBluetoothDevices()">
+        List Bluetooth Devices
+      </ion-button>
+    </ion-item>
+
+    <ion-item *ngIf="printerType === 'network'">
+      <ion-label position="floating">IP Address</ion-label>
+      <ion-input [(ngModel)]="printerIP" type="text" placeholder="192.168.1.100"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="printerType === 'network'">
+      <ion-label position="floating">Port</ion-label>
+      <ion-input [(ngModel)]="printerPort" type="number" placeholder="9100"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="bluetoothDevices.length > 0 && printerType === 'bluetooth'">
+      <ion-label>Select Printer</ion-label>
+      <ion-select [(ngModel)]="selectedPrinter" interface="popover">
+        <ion-select-option *ngFor="let device of bluetoothDevices" [value]="device">
+          {{ device.name || device.id }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <div class="ion-padding">
+    <ion-button expand="block" (click)="printReceipt()">
+      Print Receipt
+    </ion-button>
+
+    <ion-button expand="block" color="secondary" (click)="printTestPage()">
+      Print Test Page
+    </ion-button>
+  </div>
+
+  <ion-list *ngIf="messages.length > 0">
+    <ion-list-header>
+      <ion-label>Messages</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let message of messages">
+      <ion-label [color]="message.isError ? 'danger' : 'success'">{{ message.text }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

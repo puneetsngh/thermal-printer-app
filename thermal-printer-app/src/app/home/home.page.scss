@@ -1,0 +1,80 @@
+#container {
+  text-align: center;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+#container p {
+  font-size: 16px;
+  line-height: 22px;
+
+  color: #8c8c8c;
+
+  margin: 0;
+}
+
+#container a {
+  text-decoration: none;
+}
+
+.receipt-preview {
+  background-color: white;
+  font-family: monospace;
+  padding: 10px;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.divider {
+  border-bottom: 1px dashed #ccc;
+  margin: 10px 0;
+}
+
+.item-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+}
+
+.item-name {
+  text-align: left;
+}
+
+.item-price {
+  text-align: right;
+}
+
+.total {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.qr-placeholder {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 15px auto;
+  max-width: 120px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+ion-button {
+  margin: 5px 0;
+}
